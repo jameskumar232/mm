@@ -1,0 +1,27 @@
+name: Daily PDF Downloader
+
+on:
+  schedule:
+    - cron: '30 21 * * *'  # 3:00 AM IST = 21:30 UTC (previous day)
+  workflow_dispatch:  # Allow manual trigger too
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Run PDF Downloader
+        run: |
+          python main.py
